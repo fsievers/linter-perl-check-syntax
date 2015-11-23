@@ -3,9 +3,13 @@
   "main": "./lib/linter-perl-check-syntax",
   "version": "0.1.0",
   "description": "Linter plugin for perl, using `perl -c`",
+  "author": "Florian Sievers",
   "keywords": [
     "linter",
-    "perl"
+    "lint",
+    "perl",
+    "syntax check",
+    "syntax"
   ],
   "repository": "https://github.com/fsievers/linter-perl-check-syntax",
   "license": "MIT",
