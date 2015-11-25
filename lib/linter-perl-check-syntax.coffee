@@ -12,10 +12,15 @@ class PerlCheckSyntax
         filePath = textEditor.getPath()
         fileDir = path.dirname(filePath)
         parameters = []
+
         if settings.includePaths.length > 0
             parameters = parameters.concat settings.includePaths.map (p) ->
                 "-I" + path.join(rootDirectory, p)
         parameters.push('-c')
+
+        if settings.warnings == true
+            parameters.push('-w')
+
         sourceCode = textEditor.getText()
 
         return helpers.exec(
@@ -67,15 +72,19 @@ class PerlCheckSyntax
 module.exports =
     config:
         executablePath:
-            type: 'string'
-            title: 'Perl executable path'
-            default: 'perl'
+            type: "string"
+            title: "Perl executable path"
+            default: "perl"
         incPathsFromProjectRoot:
             type: "array"
             default: [".", "lib"]
             items:
                 type: "string"
             description: "Include paths from the current project root directory."
+        warnings:
+            type: "boolean"
+            default: false
+            description: "Enforce to use warnings when executing the perl syntax check (`perl -w`)"
 
     activate: ->
         @subscriptions = new CompositeDisposable
@@ -87,6 +96,10 @@ module.exports =
         @subscriptions.add atom.config.observe "#{pkg.name}.incPathsFromProjectRoot",
             (includePaths) =>
                 @includePaths = includePaths
+
+        @subscriptions.add atom.config.observe "#{pkg.name}.warnings",
+            (warnings) =>
+                @warnings = warnings
 
     deactivate: ->
         @subscriptions.dispose()
@@ -103,6 +116,7 @@ module.exports =
                     textEditor,
                     {
                         executablePath: @executablePath,
-                        includePaths: @includePaths
+                        includePaths: @includePaths,
+                        warnings: @warnings,
                     }
                 )
