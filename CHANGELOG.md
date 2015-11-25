@@ -1,3 +1,6 @@
+## 0.2.1
+* Add settings option to enforce the usage of warnings when checking the code (`perl -w`).
+
 ## 0.2.0 - Code refactor
 * Move linter function into own class for better readability.
 * Observe settings, to always start linting with current package configuration.
