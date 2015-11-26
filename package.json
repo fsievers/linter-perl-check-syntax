@@ -1,7 +1,7 @@
 {
   "name": "linter-perl-check-syntax",
   "main": "./lib/linter-perl-check-syntax",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Linter plugin for perl, using `perl -c`",
   "author": "Florian Sievers",
   "keywords": [
