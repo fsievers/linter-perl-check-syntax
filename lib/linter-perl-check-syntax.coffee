@@ -16,6 +16,11 @@ class PerlCheckSyntax
         if settings.includePaths.length > 0
             parameters = parameters.concat settings.includePaths.map (p) ->
                 "-I" + path.join(rootDirectory, p)
+
+        if settings.includePathsAbsolute.length > 0
+            parameters = parameters.concat settings.includePathsAbsolute.map (p) ->
+                "-I" + p
+
         parameters.push('-c')
 
         if settings.warnings == true
@@ -77,12 +82,21 @@ module.exports =
             default: "perl"
         incPathsFromProjectRoot:
             type: "array"
+            title: "Include paths from project root"
             default: [".", "lib"]
             items:
                 type: "string"
             description: "Include paths from the current project root directory."
+        incPathsAbsolute:
+            type: "array"
+            title: "Include paths from filesystem root"
+            default: []
+            items:
+                type: "string"
+            description: "Absolute include paths from you file system root."
         warnings:
             type: "boolean"
+            title: "Enforce warnings"
             default: false
             description: "Enforce to use warnings when executing the perl syntax check (`perl -w`)"
 
@@ -96,6 +110,10 @@ module.exports =
         @subscriptions.add atom.config.observe "#{pkg.name}.incPathsFromProjectRoot",
             (includePaths) =>
                 @includePaths = includePaths
+
+        @subscriptions.add atom.config.observe "#{pkg.name}.incPathsAbsolute",
+            (includePathsAbsolute) =>
+                @includePathsAbsolute = includePathsAbsolute
 
         @subscriptions.add atom.config.observe "#{pkg.name}.warnings",
             (warnings) =>
@@ -117,6 +135,7 @@ module.exports =
                     {
                         executablePath: @executablePath,
                         includePaths: @includePaths,
+                        includePathsAbsolute: @includePathsAbsolute,
                         warnings: @warnings,
                     }
                 )
