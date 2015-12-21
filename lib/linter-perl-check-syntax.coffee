@@ -26,6 +26,9 @@ class PerlCheckSyntax
         if settings.warnings == true
             parameters.push('-w')
 
+        if settings.tainted == true
+            parameters.push('-T')
+
         sourceCode = textEditor.getText()
 
         return helpers.exec(
@@ -99,6 +102,11 @@ module.exports =
             title: "Enforce warnings"
             default: false
             description: "Enforce to use warnings when executing the perl syntax check (`perl -w`)"
+        tainted:
+            type: "boolean"
+            title: "Enable Taint check"
+            default: false
+            description: "Enable command line taint switch (`perl -T`)"
 
     activate: ->
         @subscriptions = new CompositeDisposable
@@ -119,6 +127,10 @@ module.exports =
             (warnings) =>
                 @warnings = warnings
 
+        @subscriptions.add atom.config.observe "#{pkg.name}.tainted",
+            (tainted) =>
+                @tainted = tainted
+
     deactivate: ->
         @subscriptions.dispose()
 
@@ -137,5 +149,6 @@ module.exports =
                         includePaths: @includePaths,
                         includePathsAbsolute: @includePathsAbsolute,
                         warnings: @warnings,
+                        tainted: @tainted,
                     }
                 )

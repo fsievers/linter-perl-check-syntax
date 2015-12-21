@@ -1,3 +1,6 @@
+## 0.2.3
+* Add option to enable taint mode for perl interpreter.
+
 ## 0.2.2
 * Add option to set absolute include paths for your perl interpreter.
 
