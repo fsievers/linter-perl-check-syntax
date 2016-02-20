@@ -47,6 +47,18 @@ class PerlCheckSyntax
 
                     line = parseInt(match.capture('line'), 10) - 1
                     #col = parseInt(match.capture('column'), 10) - 1
+                    try
+                        endCol = textEditor.getBuffer().lineLengthForRow(line)
+                    catch error
+                        endCol = 0
+                        currentFilePath = filePath.split('/')
+                        currentFilePathReversed = filePath.split('/').reverse()[0]
+                        matchedFile = match.capture('file')
+                        if currentFilePathReversed != matchedFile
+                            pathSegments = currentFilePath[0..-2]
+                            pathSegments.push element for element in matchedFile.split('/')
+                            filePath = pathSegments.join('/')
+
                     message = match.capture('message')
                     messages.push
                         type: 'Error'
@@ -54,7 +66,7 @@ class PerlCheckSyntax
                         filePath: filePath
                         range: [
                             [line, 0]
-                            [line, textEditor.getBuffer().lineLengthForRow(line)]
+                            [line, endCol]
                         ]
 
                 return messages

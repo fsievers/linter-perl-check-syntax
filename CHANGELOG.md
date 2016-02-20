@@ -1,3 +1,6 @@
+## 0.3.0
+* Fix undefined buffer error messages when perl error messages references another file.
+
 ## 0.2.3
 * Add option to enable taint mode for perl interpreter.
 
