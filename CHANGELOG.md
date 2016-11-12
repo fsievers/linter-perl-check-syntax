@@ -1,3 +1,6 @@
+## 0.4.0
+* Update RegEx to match multiline error messages from perl. (Closes: #2)
+
 ## 0.3.0
 * Fix undefined buffer error messages when perl error messages references another file.
 
