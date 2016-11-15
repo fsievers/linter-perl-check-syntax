@@ -1,3 +1,6 @@
+## 0.5.0
+* Allow configuring cwd for execution. (Thanks to icgood)
+
 ## 0.4.0
 * Update RegEx to match multiline error messages from perl. (Closes: #2)
 
