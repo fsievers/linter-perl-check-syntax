@@ -31,13 +31,17 @@ class PerlCheckSyntax
 
         sourceCode = textEditor.getText()
 
+        executableCwd = settings.executableCwd
+        if executableCwd == ''
+            executableCwd = fileDir
+
         return helpers.exec(
             settings.executablePath,
             parameters,
             {
                 stdin: sourceCode,
                 stream: 'both',
-                cwd: fileDir}
+                cwd: executableCwd}
             ).then (result) ->
                 messages = []
                 regex = namedRegExp.named(REGEX)
@@ -95,6 +99,10 @@ module.exports =
             type: "string"
             title: "Perl executable path"
             default: "perl"
+        executableCwd:
+            type: "string"
+            title: "Current working directory for execution"
+            default: ""
         incPathsFromProjectRoot:
             type: "array"
             title: "Include paths from project root"
@@ -127,6 +135,10 @@ module.exports =
             (executablePath) =>
                 @executablePath = executablePath
 
+        @subscriptions.add atom.config.observe "#{pkg.name}.executableCwd",
+            (executableCwd) =>
+                @executableCwd = executableCwd
+
         @subscriptions.add atom.config.observe "#{pkg.name}.incPathsFromProjectRoot",
             (includePaths) =>
                 @includePaths = includePaths
@@ -158,6 +170,7 @@ module.exports =
                     textEditor,
                     {
                         executablePath: @executablePath,
+                        executableCwd: @executableCwd,
                         includePaths: @includePaths,
                         includePathsAbsolute: @includePathsAbsolute,
                         warnings: @warnings,
