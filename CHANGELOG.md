@@ -1,3 +1,9 @@
+## 0.6.1
+* Update changelog because of apm publish problems.
+
+## 0.6.0
+* No changes, problems with apm publish.
+
 ## 0.5.0
 * Allow configuring cwd for execution. (Thanks to icgood)
 
