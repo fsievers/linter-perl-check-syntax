@@ -1,3 +1,6 @@
+## 0.6.2
+* Trim message strings to remove newline at the end of an error.
+
 ## 0.6.1
 * Update changelog because of apm publish problems.
 

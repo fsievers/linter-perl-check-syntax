@@ -63,7 +63,7 @@ class PerlCheckSyntax
                             pathSegments.push element for element in matchedFile.split('/')
                             filePath = pathSegments.join('/')
 
-                    message = match.capture('message')
+                    message = match.capture('message')?.trim()
                     messages.push
                         type: 'Error'
                         text: message
