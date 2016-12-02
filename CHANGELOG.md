@@ -1,4 +1,7 @@
-## 0.6.3
+## 0.7.1
+* Add notice for dependencies to README.md.
+
+## 0.7.0
 * Fix RegEx to find messages with near indicator (Closes: #4).
 
 ## 0.6.2
