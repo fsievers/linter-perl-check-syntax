@@ -1,3 +1,6 @@
+## 0.6.3
+* Fix RegEx to find messages with near indicator (Closes: #4).
+
 ## 0.6.2
 * Trim message strings to remove newline at the end of an error.
 
