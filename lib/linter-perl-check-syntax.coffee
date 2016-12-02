@@ -4,7 +4,7 @@ path = require('path')
 pkg = require('../package.json')
 
 class PerlCheckSyntax
-    REGEX = /(:<message>[\s\S]*?) at (:<file>.*) line (:<line>\d+)\./ig
+    REGEX = /(:<message>[\s\S]*?) at (:<file>.*) line (:<line>\d+)(?:\.|, near.*)/ig
     helpers = require('atom-linter')
 
     lint: (textEditor, settings) ->
