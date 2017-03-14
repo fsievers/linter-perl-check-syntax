@@ -65,13 +65,15 @@ class PerlCheckSyntax
 
                     message = match.capture('message')?.trim()
                     messages.push
-                        type: 'Error'
-                        text: message
-                        filePath: filePath
-                        range: [
+                        severity: 'error'
+                        excerpt: message
+                        location: {
+                          file: filePath
+                          position: [
                             [line, 0]
                             [line, endCol]
-                        ]
+                          ]
+                        }
 
                 return messages
 
@@ -164,7 +166,7 @@ module.exports =
             name: "Perl"
             grammarScopes: ['source.perl']
             scope: 'file'
-            lintOnFly: true
+            lintsOnChange: true
             lint: (textEditor) =>
                 linter.lint(
                     textEditor,
