@@ -1,3 +1,7 @@
+## 0.8.0
+* Update dependency to atom-linter and provide linter 2.0.0
+* Migrate to linter 2.0.0 message format
+
 ## 0.7.1
 * Add notice for dependencies to README.md.
 
