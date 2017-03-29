@@ -29,6 +29,8 @@ class PerlCheckSyntax
         if settings.tainted == true
             parameters.push('-T')
 
+        execTimeout = parseInt(settings.execTimeout) || 0
+
         sourceCode = textEditor.getText()
 
         executableCwd = settings.executableCwd
@@ -41,7 +43,9 @@ class PerlCheckSyntax
             {
                 stdin: sourceCode,
                 stream: 'both',
-                cwd: executableCwd}
+                cwd: executableCwd,
+                timeout: execTimeout
+            }
             ).then (result) ->
                 messages = []
                 regex = namedRegExp.named(REGEX)
@@ -129,6 +133,12 @@ module.exports =
             title: "Enable Taint check"
             default: false
             description: "Enable command line taint switch (`perl -T`)"
+        xexecTimeout:
+            type: "integer"
+            title: "Linter Exec Timeout"
+            default: 0
+            minimum: 0
+            description: "This sets the timeout (in milliseconds) for the internal exec command. This is useful if you work with files on network shares."
 
     activate: ->
         @subscriptions = new CompositeDisposable
@@ -157,6 +167,10 @@ module.exports =
             (tainted) =>
                 @tainted = tainted
 
+        @subscriptions.add atom.config.observe "#{pkg.name}.xexecTimeout",
+            (execTimeout) =>
+                @execTimeout = execTimeout
+
     deactivate: ->
         @subscriptions.dispose()
 
@@ -177,5 +191,6 @@ module.exports =
                         includePathsAbsolute: @includePathsAbsolute,
                         warnings: @warnings,
                         tainted: @tainted,
+                        execTimeout: @execTimeout
                     }
                 )
