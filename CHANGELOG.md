@@ -1,3 +1,6 @@
+## 0.8.1
+* Add option to set exec timeout via configuration
+
 ## 0.8.0
 * Update dependency to atom-linter and provide linter 2.0.0
 * Migrate to linter 2.0.0 message format
